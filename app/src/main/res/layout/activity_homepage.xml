@@ -14,7 +14,7 @@
     tools:context=".HomepageActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/menuImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -49,7 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hi" />
 
-    <EditText
+    <!--<EditText
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hi" />
+        app:layout_constraintTop_toBottomOf="@+id/hi" />-->
 
     <TextView
         android:id="@+id/categoriesTextview"
@@ -82,7 +82,7 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <HorizontalScrollView
         android:id="@+id/categoriesHorizontalScrollView"

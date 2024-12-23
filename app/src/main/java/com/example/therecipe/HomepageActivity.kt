@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,9 +30,6 @@ class HomepageActivity : AppCompatActivity(){
     private lateinit var linearLayoutContainer: LinearLayout
     val dataList = ArrayList<DataItem>()
     val itemList = ArrayList<JsonProcessor.Item>()
-    //val list = ArrayList<RecipeDataInterface>()
-    //lateinit var rcpList: List<RecipeDataInterface>
-    lateinit var itemsArray:JSONArray
     private var recipeList = ArrayList<Item>()
     private lateinit var scrollView: ScrollView
 
@@ -44,57 +42,18 @@ class HomepageActivity : AppCompatActivity(){
 
         val dataList = createDataList()
         populateScrollview(dataList)
-        //loadRecipeData()
         checkFileDest()
         recipeList = jsonProcessor.callRecipeData(this)
 
-//        val sourceJsonString = jsonProcessor.loadJSONFromAsset(this, "recipetypes.json")
-//        if (sourceJsonString != null) {
-//            val jsonObject = jsonProcessor.parseJsonData(sourceJsonString)
-//            if (jsonObject != null) {
-//                Log.i("HomepageActivity onCreate", jsonObject.toString())
-//                val modifiedJsonObject = jsonProcessor.modifyJsonData(jsonObject)         //To modify data
-//                Log.i("HomepageActivity onCreate", modifiedJsonObject.toString())         //To modify data
-//                val destinationJsonString = jsonProcessor.convertToJsonString(modifiedJsonObject)
-//                jsonProcessor.saveJSONToInternalStoereryeryrage(this, "upToDateRecipe.json", destinationJsonString)     //To modify data
-//                val textView = findViewById<TextView>(R.id.json)
-//                textView.text = destinationJsonString
-//                Log.i("HomepageActivity onCreate", destinationJsonString)       //To modify data
-//                displayItems(recipeList)
-                //val jsonObject = JSONObject(js)
-//                itemsArray = modifiedJsonObject.getJSONArray("recipes")
-//                for (i in 0 until itemsArray.length()) {
-//                    val itemObject = itemsArray.getJSONObject(i)
-//                    val id = itemObject.getString("dishName")
-//                    val name = itemObject.getString("image")
-//                    val value = itemObject.getString("category")
-//                        itemList.add(JsonProcessor.Item(id, name, value, "", "", ""))
-//                    Log.i("latestItemList", "Dish Name: $id, Image: $name, Category: $value")
-//                }
-//            }
-//        }
         popularRecyclerView()
-        //Log.i("Interface onCreate", rcpList.toString())
-        scrollView = findViewById(R.id.homepageScrollView) // Replace with your ScrollView ID
+        scrollView = findViewById(R.id.homepageScrollView)
         scrollView.post { scrollView.scrollTo(0, 0) } // Scroll to top after layout
+
+        binding.menuImage.setOnClickListener {
+            Toast.makeText(this, "Not functional but looks good to be there isn't it?", Toast.LENGTH_LONG).show()
+        }
     }
 
-//    private fun loadRecipeData(modifiedJsonObject: JSONObject) {
-//        val jsonString = loadJSONFromAsset(this, "recipetypes.json")
-//        if (jsonString != null) {
-//            val itemList = modifiedJsonObject
-//            displayItems(itemList)
-//        }
-//    }
-//    private fun displayItems(itemList: ArrayList<JsonProcessor.Item>) {
-//       // val textView = findViewById<TextView>(R.id.textView)
-//        var text = ""
-//        for (item in itemList) {
-//            Log.i("displayItems()", "Dish Name: ${item.dishName}, Image: ${item.image}, Category: ${item.category}, Ingredients : ${item.ingredients}, Steps: {${item.steps}}, Recommended: ${item.recommended}")
-//            //text += "ID: ${item.dishName}, Name: ${item.dishName}, Value: ${item.value}\n"
-//        }
-//        //textView.text = text
-//    }
 
     private fun createDataList(): ArrayList<DataItem> {
 
@@ -108,9 +67,6 @@ class HomepageActivity : AppCompatActivity(){
 
     private fun populateScrollview(dataList: ArrayList<DataItem>) {
         for (item in dataList) {
-//            val textView = TextView(this)
-//            textView.text = item.title
-//            linearLayoutContainer.addView(textView)
             val cardView = createCardView(item.title, item.catImg)
             linearLayoutContainer.addView(cardView)
 
@@ -126,8 +82,6 @@ class HomepageActivity : AppCompatActivity(){
         )
         layoutParams.setMargins(8, 8, 8, 8)
         cardView.layoutParams = layoutParams
-//        cardView.radius = 8f
-//        cardView.cardElevation = 4f
 
         val linearLayout = LinearLayout(this)
         linearLayout.orientation = LinearLayout.VERTICAL
@@ -140,8 +94,6 @@ class HomepageActivity : AppCompatActivity(){
         )
 
         imageView.layoutParams = imageLayoutParams
-//        val drawable = ContextCompat.getDrawable(this, catImg)
-//        imageView.setImageDrawable(drawable)
         val bitmap = loadScaledBitmap(resources, catImg, 200, 200)
         imageView.setImageBitmap(bitmap)
         imageView.setBackgroundResource(R.drawable.category_border)
@@ -155,13 +107,11 @@ class HomepageActivity : AppCompatActivity(){
         linearLayout.addView(textView)
         cardView.addView(linearLayout)
         cardView.setOnClickListener{
-            // Handle click event for the CardView
             var intent = Intent(this@HomepageActivity, CategoryActivity::class.java)
             Log.d("Cardview onClick()", title)
             intent.putExtra("category", title)
             startActivity(intent)
         }
-//        linearLayoutContainer.addView(cardView)
         return  cardView
     }
 
@@ -198,67 +148,6 @@ class HomepageActivity : AppCompatActivity(){
         return inSampleSize
     }
 
-   /* fun loadJSONFromAsset(context: Context, filename: String): String? {
-        return try {
-            val inputStream: InputStream = context.assets.open(filename)
-            val size: Int = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer)
-            inputStream.close()
-            String(buffer, Charsets.UTF_8)
-        } catch (e: IOException) {
-            e.printStackTrace()
-            null
-        }
-    }*/
-
-    /*data class Item(val dishName: String, val image: String, val category: String, val  ingredients: String, val steps: String, val recommended: String)*/
-
-    /*fun parseJsonData(jsonString: String): JSONObject? {
-        return try {
-            val jsonObject = JSONObject(jsonString)
-            val itemsArray = jsonObject.getJSONArray("recipes")
-            for (i in 0 until itemsArray.length()) {
-                val itemObject = itemsArray.getJSONObject(i)
-                val dishName = itemObject.getString("dishName")
-                val image = itemObject.getString("image")
-                val category = itemObject.getString("category")
-                val ingredients = itemObject.getString("ingredients")
-                val steps = itemObject.getString("steps")
-                val recommended = itemObject.getString("recommended")
-                itemList.add(Item(dishName, image, category, ingredients, steps, recommended))
-            }
-            JSONObject(jsonString)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }*/
-
-    /*fun modifyJsonData(jsonObject: JSONObject): JSONObject {
-        val itemsArray = jsonObject.getJSONArray("recipes")
-        val newItem = JSONObject()
-        newItem.put("dishName", "3")
-        newItem.put("image", "2131165427")
-        newItem.put("category", "Value 3")
-        itemsArray.put(newItem)
-        return jsonObject
-    }*/
-
-    /*fun convertToJsonString(jsonObject: JSONObject): String {
-        return jsonObject.toString()
-    }*/
-
-    /*fun saveJSONToInternalStorage(context: Context, fileName: String, jsonString: String) {
-        try {
-            val fileOutputStream: FileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE)
-            fileOutputStream.write(jsonString.toByteArray())
-            fileOutputStream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }*/
-
     fun checkFileDest(){
         val fileDir = applicationContext.filesDir
         val filePath = fileDir.absolutePath
@@ -267,11 +156,6 @@ class HomepageActivity : AppCompatActivity(){
         val externalPublicFileExists = checkExternalStoragePublicFile("upToDateRecipe.json")
         val externalPrivateFileExists = checkExternalStoragePrivateFile(this, "upToDateRecipe.json")
 
-//        //val textView = findViewById<TextView>(R.id.textView)
-//        var text = "Internal Storage: $internalFileExists\n"
-//        text += "External Storage (Public): $externalPublicFileExists\n"
-//        text += "External Storage (Private): $externalPrivateFileExists"
-//        //textView.text = text
 
         Log.d("FileCheck", "Internal Storage: $internalFileExists")
         Log.d("FileCheck", "External Storage (Public): $externalPublicFileExists")
@@ -325,12 +209,7 @@ class HomepageActivity : AppCompatActivity(){
                             "Ingredients : $ing, " +
                             "Steps: $steps, " +
                             "Recommended: $recommended")
-
-           // }
         }
-       // Log.i("popularRecyclerView()", "Line: 316, Size: " + list.size.toString())
         recyclerview.adapter = RecipeAdapter(popularList)
     }
-
-    //data class HomePageItem(override val dishName: String, override val image: String, override val category: String, override val  ingredients: String, override val steps: String, override val recommended: String): RecipeDataInterface
 }

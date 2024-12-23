@@ -58,18 +58,6 @@ class JsonProcessor {
     fun parseJsonData(jsonString: String): JSONObject? {
         return try {
             val jsonObject = JSONObject(jsonString)
-//            val itemsArray = jsonObject.getJSONArray("recipes")
-//            for (i in 0 until itemsArray.length()) {
-//                val itemObject = itemsArray.getJSONObject(i)
-//                val dishName = itemObject.getString("dishName")
-//                val image = itemObject.getString("image")
-//                val category = itemObject.getString("category")
-//                val ingredients = itemObject.getString("ingredients")
-//                val steps = itemObject.getString("steps")
-//                val recommended = itemObject.getString("recommended")
-//                recipeList.add(Item(dishName, image, category, ingredients, steps, recommended))
-//                Log.i("parseJsonData()", "itemList Size: " + recipeList.size.toString())
-//            }
             JSONObject(jsonString)
         } catch (e: Exception) {
             e.printStackTrace()

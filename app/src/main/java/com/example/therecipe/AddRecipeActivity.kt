@@ -45,7 +45,6 @@ class AddRecipeActivity : AppCompatActivity() {
 
             val sourceJsonString = jsonProcessor.loadJSONFromAsset(this, "recipetypes.json")
         if (sourceJsonString != null) {
-            //val jsonObject = jsonProcessor.parseJsonData(sourceJsonString)
             val ingredients = sourceJsonString?.let { it1 -> extractIngredients(it1) }
             val recipe = JsonProcessor.Recipe(
                 dishname,

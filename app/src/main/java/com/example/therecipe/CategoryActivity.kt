@@ -13,7 +13,6 @@ import com.example.therecipe.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {
 
-   // lateinit var category: String
     private lateinit var binding: ActivityCategoryBinding
     private var jsonProcessor = JsonProcessor()
     private var recipeList = ArrayList<Item>()
@@ -25,9 +24,6 @@ class CategoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val getCategory = intent.getStringExtra("category")
-//        if (getCategory != null) {
-//            category = getCategory
-//        }
         Log.i("CategoryActivity()", " Category$getCategory getCategory$getCategory")
         binding.categoryTitle.text = getCategory
 
