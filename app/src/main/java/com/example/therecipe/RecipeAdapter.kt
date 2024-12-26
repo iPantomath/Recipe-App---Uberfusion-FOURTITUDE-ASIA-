@@ -33,7 +33,7 @@ class RecipeAdapter(itemList: ArrayList<JsonProcessor.Item>) : RecyclerView.Adap
         holder.dishName.text = currentItem.dishName
         holder.category.text = currentItem.category.replaceFirstChar { it.uppercase()}
 
-        
+
         val defaultOptions = RequestOptions().placeholder(R.drawable.no_picture_available)
             .error(R.drawable.no_picture_available)
 
@@ -48,7 +48,7 @@ class RecipeAdapter(itemList: ArrayList<JsonProcessor.Item>) : RecyclerView.Adap
         Log.d("onBindViewHolder", "Calling RecipeActivity")
         intent.putExtra("dishName", currentItem.dishName)
         intent.putExtra("category", currentItem.category)
-        intent.putExtra("image", imageUrl)
+        intent.putExtra("image", currentItem.image)
         intent.putExtra("ingredients", currentItem.ingredients)
         intent.putExtra("steps", currentItem.steps)
         intent.putExtra("recommended", currentItem.recommended)
