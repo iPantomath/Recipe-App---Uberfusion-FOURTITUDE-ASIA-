@@ -16,15 +16,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.therecipe.RecipeApi.ImageSource
 import com.example.therecipe.RecipeApi.Recipe
 
-class RecipeAdapter(private val recipes: List<Recipe>) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class CategoriesAdapter(private val recipes: List<Recipe>) : RecyclerView.Adapter<CategoriesAdapter.RecipeViewHolder>() {
 
 //    val itemList = itemList
 
     class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
        /* fun bind(recipe: Recipe) {*/
-            val cuisineName: TextView = itemView.findViewById(R.id.dishname)
-            val cuisineCategory: TextView = itemView.findViewById(R.id.category)
-            val cuisineImage: ImageView = itemView.findViewById(R.id.recipeImage)
+//            val cuisineName: TextView = itemView.findViewById(R.id.dishname)
+            val cuisineCategory: TextView = itemView.findViewById(R.id.categories)
+//            val cuisineImage: ImageView = itemView.findViewById(R.id.recipeImage)
 
 //            cuisineName.text = recipe.name
 //            cuisine.text = recipe.cuisine
@@ -37,7 +37,7 @@ class RecipeAdapter(private val recipes: List<Recipe>) : RecyclerView.Adapter<Re
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         Log.i("onCreateViewHolder", "Size: ${recipes.size}")
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recipe_recyclerview, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.category_recyclerview, parent, false)
         return RecipeViewHolder(view)
     }
 
@@ -49,40 +49,32 @@ class RecipeAdapter(private val recipes: List<Recipe>) : RecyclerView.Adapter<Re
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         Log.i("onBindViewHolder", "Size: ${recipes.size}")
         val recipe = recipes[position]
-        holder.cuisineName.text = recipe.name
+//        holder.cuisineName.text = recipe.name
         holder.cuisineCategory.text = recipe.cuisine
-        if(recipe.imageSource?.equals(ImageSource.LOCAL) == true){
-
-            val bitmap = BitmapFactory.decodeFile(recipe.image) // recipe.image is a local path
-            holder.cuisineImage.setImageBitmap(bitmap)
-
-        }else{
-            Glide.with(holder.itemView.context)
-                .load(recipe.image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.drawable.no_picture_available)
-                .into(holder.cuisineImage)
-        }
+//        if(recipe.imageSource?.equals(ImageSource.LOCAL) == true){
+//
+//            val bitmap = BitmapFactory.decodeFile(recipe.image) // recipe.image is a local path
+//            holder.cuisineImage.setImageBitmap(bitmap)
+//
+//        }else{
+//            Glide.with(holder.itemView.context)
+//                .load(recipe.image)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .error(R.drawable.no_picture_available)
+//                .into(holder.cuisineImage)
+//        }
 
 
         holder.itemView.setOnClickListener {
             // Handle item click here
             val context = holder.itemView.context
-            val intent = Intent(context, RecipeActivity::class.java)
+            val intent = Intent(context, CategoryActivity::class.java)
             // Add extras to the intent (e.g., recipe details)
             Log.d("RecipeAdapter", "Dish Name: ${recipe.name}, "+
             "Cuisine: ${recipe.cuisine}, "+ "Recipe Ingredients: ${recipe.ingredients}" +
             "Instruction: ${recipe.instructions}" + "Cook Time: ${recipe.cookTimeMinutes}" +
             "Servings: ${recipe.servings}")
-
-            intent.putExtra("recipeName", recipe.name)
-            intent.putExtra("recipeCuisine", recipe.cuisine)
-            intent.putExtra("recipeImage", recipe.image)
-            intent.putExtra("recipeIngredients", ArrayList(recipe.ingredients)) // Pass the list of ingredients
-            intent.putExtra("recipeInstructions", ArrayList(recipe.instructions))
-            intent.putExtra("recipePrepTime", recipe.prepTimeMinutes)
-            intent.putExtra("recipeCookTime", recipe.cookTimeMinutes)
-            intent.putExtra("recipeServings", recipe.servings)
+            intent.putExtra("category", recipe.cuisine)
             context.startActivity(intent)
         }
     }
